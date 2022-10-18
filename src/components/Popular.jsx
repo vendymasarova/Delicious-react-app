@@ -36,7 +36,7 @@ const Popular = () => {
           arrows: false,
           pagination: false,
           drag: "free",
-          gap: "5rem",
+          gap: "2rem",
         }}>
           {popular.map((recipe) => {
             return (
@@ -63,11 +63,11 @@ const Card = styled.div`
   min-height: 25rem;
   position: relative;
   overflow: hidden;
+  border-radius: 2rem;
 
   img {
     position: absolute;
     left: 0;
-    border-radius: 2rem;
     height: 100%;
     width: 100%;
     object-fit: cover
