@@ -2,9 +2,13 @@ import React, {useState, useEffect} from 'react'
 import styled from "styled-components";
 import { Splide, SplideSlide } from '@splidejs/react-splide'
 import {Link} from 'react-router-dom'
+import Loader from './Loader';
+import Error from './Error';
 
 const Veggie = () => {
-  const [veggie, setVeggie] = useState([])
+  const [veggie, setVeggie] = useState([]);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [error, setError] = useState(false)
 
   useEffect(() => {
     getveggie();
@@ -17,16 +21,20 @@ const Veggie = () => {
     if (check) {
       setVeggie(JSON.parse(check))
     } else {
-      const api = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=${process.env.REACT_APP_API_KEY}&number=9&tags=vegetarian`);
-      const data = await api.json();
-      localStorage.setItem('veggie', JSON.stringify(data.recipes))
-      setVeggie(data.recipes)
+      const apiVeggie = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=${process.env.REACT_APP_API_KEY}&number=9&tags=vegetarian`)
+      .then((data) => data.json())
+      .then((res) => {
+        const veggieRes = res.recipes;
+        setVeggie(veggieRes)
+      })
+      .catch(() => setError(true))
+      localStorage.setItem('veggie', JSON.stringify(apiVeggie))
+      setIsLoaded(true)
     }
-
-
   }
   return (
     <>
+    {isLoaded && !error && (
       <Wrapper>
         <h3>Vegetarian Picks</h3>
         <Splide options={{
@@ -51,12 +59,26 @@ const Veggie = () => {
           })}
         </Splide>
       </Wrapper>
+    )}
+      {!isLoaded && !error && (
+        <WrapperLoader>
+          <Loader />
+        </WrapperLoader>
+      )}
+      {error && (<Error />)}
     </>
   )
 }
 
 const Wrapper = styled.div`
-  margin: 4rem 0rem
+  margin: 4rem 0rem;
+`
+
+const WrapperLoader = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `
 
 const Card = styled.div`

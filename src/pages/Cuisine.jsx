@@ -16,7 +16,6 @@ const Cuisine = () => {
   console.log(cuisine)
   console.log(params)
 
-
   useEffect(() => {
     getCuisine(params.type)
     console.log(params.type);
@@ -30,7 +29,7 @@ const Cuisine = () => {
         exit={{ opacity: 0 }}
         transition={{ duration: 0.5 }}>
       
-      {cuisine.map((item) => {
+      {cuisine?.map((item) => {
         return (
           <Card key={item.id}>
             <Link to={'/recipe'/ + item.id} >
