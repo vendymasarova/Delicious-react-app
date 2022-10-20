@@ -17,21 +17,21 @@ const Popular = () => {
 
   const getPopular = async () => {
 
-    const check = localStorage.getItem('popular');
+    // const check = localStorage.getItem('popular');
 
-    if (check) {
-      setPopular(JSON.parse(check))
-    } else {
-      const api = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=${process.env.REACT_APP_API_KEY}&number=9`)
+    // if (check) {
+    //   setPopular(JSON.parse(check))
+    // } else {
+       await fetch(`https://api.spoonacular.com/recipes/random?apiKey=${process.env.REACT_APP_API_KEY}&number=9`)
       .then((data) => data.json())
       .then((res) => {
         const recipes = res.recipes;
         setPopular(recipes)
       })
       .catch(() => setError(true))
-      localStorage.setItem('popular', JSON.stringify(api))
+      // localStorage.setItem('popular', JSON.stringify(api))
       setIsLoaded(true)
-    }
+    // }
   }
 
   console.log(popular)

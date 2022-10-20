@@ -13,9 +13,9 @@ const Searched = () => {
 
   const getSearched = async (name) => {
     const apiSearch = await fetch(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&query=${name}`)
-    .then((data) => {
-      const searcherResults = data.json()
-      setSearchedRecipes(searcherResults.results)
+    .then((data) => data.json())
+    .then((res) => {
+      setSearchedRecipes(res.results)
     })
     .catch((err) => setError(true))
     setIsLoaded(true)

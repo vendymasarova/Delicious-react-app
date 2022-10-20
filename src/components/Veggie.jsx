@@ -16,21 +16,21 @@ const Veggie = () => {
 
   const getveggie = async () => {
 
-    const check = localStorage.getItem('veggie');
+    // const check = localStorage.getItem('veggie');
 
-    if (check) {
-      setVeggie(JSON.parse(check))
-    } else {
-      const apiVeggie = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=${process.env.REACT_APP_API_KEY}&number=9&tags=vegetarian`)
+    // if (check) {
+    //   setVeggie(JSON.parse(check))
+    // } else {
+      await fetch(`https://api.spoonacular.com/recipes/random?apiKey=${process.env.REACT_APP_API_KEY}&number=9&tags=vegetarian`)
       .then((data) => data.json())
       .then((res) => {
         const veggieRes = res.recipes;
         setVeggie(veggieRes)
       })
       .catch(() => setError(true))
-      localStorage.setItem('veggie', JSON.stringify(apiVeggie))
+      // localStorage.setItem('veggie', JSON.stringify(apiVeggie))
       setIsLoaded(true)
-    }
+    // }
   }
   return (
     <>
